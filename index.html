@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+</head>
+
+<body>
+    <p>PM2.5: <span id="PM2_5"></span></p>
+    <p>CO: <span id="CO"></span></p>
+    <p>NH3: <span id="NH3"></span></p>
+    <p>O3: <span id="O3"></span></p>
+    <p>Humidity: <span id="Humidity"></span></p>
+    <p>Temperature: <span id="Temperature"></span></p>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import {
+            getDatabase,
+            get
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDYBEhMHoXjiZWgnvi1cteewz-EcSMzwr0",
+            authDomain: "dust-d36e5.firebaseapp.com",
+            databaseURL: "https://dust-d36e5-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "dust-d36e5",
+            storageBucket: "dust-d36e5.appspot.com",
+            messagingSenderId: "408995580367",
+            appId: "1:408995580367:web:3c5a24f7dd63a4b0282aba"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        var database = firebase.database();
+        var CO_base = database.ref("test/CO(mg_m^3)");
+        var NH3_base = database.ref("test/NH3(ug_m^3)");
+        var O3_base = database.ref("test/O3(ppm)");
+        var PM2_5_base = database.ref("test/dust(mg_m^3)");
+        var humidity_base = database.ref("test/humidity");
+        var temperature_base = database.ref("test/temperature");
+
+        const PM2_5_el = document.getElementById("PM2_5");
+        const CO_el = document.getElementById("CO");
+        const NH3_el = document.getElementById("NH3");
+        const O3_el = document.getElementById("O3");
+        const Humidity_el = document.getElementById("Humidity");
+        const Temperature_el = document.getElementById("Temperature");
+        CO_base.on('value', function(getdata) {
+            var CO_value = getdata.val();
+            CO_el.textContent = CO_value
+            console.log(CO_value)
+        })
+
+        NH3_base.on('value', function(getdata) {
+            var NH3_value = getdata.val();
+            console.log(NH3_value)
+        })
+
+        O3_base.on('value', function(getdata) {
+            var O3_value = getdata.val();
+            console.log(O3_value)
+        })
+
+        PM2_5_base.on('value', function(getdata) {
+            var PM2_5_value = getdata.val();
+            console.log(PM2_5_value)
+        })
+
+        humidity_base.on('value', function(getdata) {
+            var humidity_value = getdata.val();
+            console.log(humidity_value)
+        })
+
+        temperature_base.on('value', function(getdata) {
+            var tempe_value = getdata.val();
+            console.log(tempe_value)
+        })
+    </script>
+</body>
+
+</html>
