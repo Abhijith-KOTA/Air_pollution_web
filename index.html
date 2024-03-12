@@ -4,33 +4,34 @@
 <head>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    <link rel="stylesheet" href="index.css" >
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
     <div class="bg-container">
+        <h1>Real Time Air Pollution</h1>
         <div class="PM2_5-container">
-            <p>PM2.5: <span id="PM2_5"></span></p>
+            <p><span class="bold-text" >PM2.5:</span> <span id="PM2_5"></span> (mg_m^3)</p>
         </div>
 
         <div class="CO-container">
-            <p>CO: <span id="CO"></span></p>
+            <p><span class="bold-text" >CO:</span> <span id="CO"></span> (mg_m^3)</p>
         </div>
 
         <div class="NH3-container">
-            <p>NH3: <span id="NH3"></span></p>
+            <p><span class="bold-text" >NH3:</span> <span id="NH3"></span> (ug_m^3)</p>
         </div>
 
         <div class="O3-container">
-            <p>O3: <span id="O3"></span></p>
+            <p><span class="bold-text" >O3:</span> <span id="O3"></span> (ppm)</p>
         </div>
 
         <div class="Humidity-container">
-            <p>Humidity: <span id="Humidity"></span></p>
+            <p><span class="bold-text" >Humidity:</span> <span id="Humidity"></span></p>
         </div>
 
         <div class="Temperature-container">
-            <p>Temperature: <span id="Temperature"></span></p>
+            <p><span class="bold-text" >Temperature:</span> <span id="Temperature"></span></p>
         </div>
 
     </div>

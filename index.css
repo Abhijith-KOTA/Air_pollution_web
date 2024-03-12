@@ -6,4 +6,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Times New Roman';
+}
+.bold-text{
+    font-weight: bold;
 }
