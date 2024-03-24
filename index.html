@@ -4,35 +4,92 @@
 <head>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b2560d01bd.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
     <div class="bg-container">
-        <h1>Real Time Air Pollution</h1>
-        <div class="PM2_5-container">
-            <p><span class="bold-text" >PM2.5:</span> <span id="PM2_5"></span> (mg_m^3)</p>
+        <div class="nav-bar">
+            <h1>Air Quaility</h1>
+        </div>
+        <div class="city">
+            <label for="city" class="location-icon"><i class="fa-solid fa-location-dot"></i></label>
+            <select name="city" id="city" class="city-drop">
+                <option value="Coimbatore" selected>Coimbatore</option>
+                <option value="City1">City 1</option>
+                <option value="City2">City 2</option>
+                <option value="City3">City 3</option>
+            </select>
         </div>
 
-        <div class="CO-container">
-            <p><span class="bold-text" >CO:</span> <span id="CO"></span> (mg_m^3)</p>
+        <div class="time-container">
+            <i class="fa-regular fa-clock clock-icon"></i>
+            <span id="timestam"></span>
         </div>
+        <table class="table">
 
-        <div class="NH3-container">
-            <p><span class="bold-text" >NH3:</span> <span id="NH3"></span> (ug_m^3)</p>
-        </div>
-
-        <div class="O3-container">
-            <p><span class="bold-text" >O3:</span> <span id="O3"></span> (ppm)</p>
-        </div>
-
-        <div class="Humidity-container">
-            <p><span class="bold-text" >Humidity:</span> <span id="Humidity"></span></p>
-        </div>
-
-        <div class="Temperature-container">
-            <p><span class="bold-text" >Temperature:</span> <span id="Temperature"></span></p>
-        </div>
+            <tr>
+                <th>Pollutant</th>
+                <th>Min</th>
+                <th>Average</th>
+                <th>Max</th>
+                <th>Instantaneous</th>
+                <th>Unit</th>
+            </tr>
+            <tr id="pm2_5_row" class="bg-danger-color">
+                <td class="bold-text">PM2.5</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td id="PM2_5"></td>
+                <td>(mg/m^3)</td>
+            </tr>
+            <tr id="CO_row">
+                <td class="bold-text">CO</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td id="CO"></td>
+                <td>(mg/m^3)</td>
+            </tr>
+            <tr id="NH3_row">
+                <td class="bold-text">NH3</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td id="NH3"></td>
+                <td>(ug/m^3)</td>
+            </tr>
+            <tr id="O3_row">
+                <td class="bold-text">O3</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td id="O3"></td>
+                <td>(ppm)</td>
+            </tr>
+            <tr id="Humidity_row">
+                <td class="bold-text">Humidity</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td id="Humidity"></td>
+                <td>(RH)</td>
+            </tr>
+            <tr id="temp_row">
+                <td class="bold-text">Temperature</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td id="Temperature"></td>
+                <td>(°C)</td>
+            </tr>
+        </table>
 
     </div>
     <script type="module">
@@ -64,7 +121,10 @@
         const PM2_5_base = database.ref("test/dust(mg_m^3)");
         const humidity_base = database.ref("test/humidity");
         const temperature_base = database.ref("test/temperature");
+        const timestam_base = database.ref("test/datetime")
 
+        const timestam_el = document.getElementById("timestam");
+        const pm2_5_row_el = document.getElementById("pm2_5_row");
         const PM2_5_el = document.getElementById("PM2_5");
         const CO_el = document.getElementById("CO");
         const NH3_el = document.getElementById("NH3");
@@ -92,7 +152,8 @@
 
         PM2_5_base.on('value', function(getdata) {
             var PM2_5_value = getdata.val();
-            PM2_5_el.textContent = PM2_5_value
+            PM2_5_el.textContent = PM2_5_value;
+            pm2_5_row_el.className = "";
             console.log(PM2_5_value)
         })
 
@@ -106,6 +167,12 @@
             var tempe_value = getdata.val();
             Temperature_el.textContent = tempe_value
             console.log(tempe_value)
+        })
+
+        timestam_base.on('value', (data) => {
+            var time = data.val();
+            timestam_el.textContent = time;
+            console.log(time);
         })
     </script>
 </body>
